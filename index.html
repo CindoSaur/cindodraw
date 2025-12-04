@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cindudraw.com</title>
+
+    <!-- NOTE: CSS chính của trang -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="page-wrapper">
+    <div class="container">
+
+        <!-- ⭐ HEADER: tiêu đề website -->
+        <header>
+            <h1>Welcome Drawing With Cindo</h1>
+            <p>I will upload my pictures in this web</p>
+        </header>
+
+        <!-- ⭐ NAV: menu điều hướng -->
+        <nav>
+            <ul>
+                <li><a class="btn-nav" href="#about" id="aboutLink">About</a></li>
+
+                <!-- NOTE: mở modal contact -->
+                <li><a class="btn-nav" href="#contact" id="contactLink">Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- ⭐ CARDS: nơi chứa ảnh -->
+        <div class="cards">
+            <div class="card">
+                <!-- NOTE: onclick mở modal xem ảnh lớn -->
+                <img src="images/PIC5.png" alt="Wanna Fish?" onclick="openImgPreview(this.src)">
+                <h4>#5</h4>
+            </div>
+
+            <!-- NOTE: CARD hiển thị ảnh vẽ -->            
+            <div class="card">
+                <!-- NOTE: onclick mở modal xem ảnh lớn -->
+                <img src="images/PIC4.png" alt="Wanna Fish?" onclick="openImgPreview(this.src)">
+                <h4>#4</h4>
+            </div>  
+
+            <div class="card">
+                <!-- NOTE: onclick mở modal xem ảnh lớn -->
+                <img src="images/PIC3.jpg" alt="Huh?" onclick="openImgPreview(this.src)">
+                <h4>#3</h4>
+            </div>            
+            
+            <div class="card">
+                <!-- NOTE: onclick mở modal xem ảnh lớn -->
+                <img src="images/PIC2.jpg" alt="LIKE" onclick="openImgPreview(this.src)">
+                <h4>#2</h4>
+            </div>
+            
+            <div class="card">
+                <!-- NOTE: onclick mở modal xem ảnh lớn -->
+                <img src="images/PIC1.jpg" alt="FISH" onclick="openImgPreview(this.src)">
+                <h4>#1</h4>
+            </div>
+
+
+
+
+
+            <!-- ⭐ MODAL XEM ẢNH FULL -->
+            <div id="imgPreviewModal" class="modal">
+                <!-- NOTE: nút đóng ảnh -->
+                <span class="close" onclick="closeImgPreview()">&times;</span>
+
+                <!-- NOTE: ảnh được load vào đây khi click -->
+                <img id="previewImg" class="preview-img">
+            </div>
+
+        </div>
+
+        <!-- ⭐ CONTACT FORM MODAL -->
+        <div id="contactModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('contactModal')">&times;</span>
+                <h2>Send me a mail</h2>
+
+                <!-- NOTE: gửi mail bằng FormSubmit -->
+                <form action="https://formsubmit.co/gglau223@gmail.com" method="POST">
+                    <input type="text" name="name" required placeholder="Name">
+                    <input type="email" name="email" required placeholder="Email">
+                    <input type="text" name="subject" required placeholder="Subject">
+                    <textarea name="message" required placeholder="Message"></textarea>
+
+                    <!-- NOTE: tắt captcha -->
+                    <input type="hidden" name="_captcha" value="false">
+
+                    <!-- NOTE: không chuyển trang sau khi gửi -->
+                    <input type="hidden" name="_next" value="">
+
+                    <!-- NOTE: kiểu thông báo -->
+                    <input type="hidden" name="_template" value="box">
+
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ⭐ ABOUT MODAL -->
+        <div id="aboutModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('aboutModal')">&times;</span>
+                <h2>About This Site</h2>
+                <p>Welcome to "Drawing With Cindo" — a small showcase of my drawings and a simple place to share and receive feedback.</p><br>
+                <p>Author: Cindo</p>
+            </div>
+        </div>
+
+        <!-- ⭐ MAIN CONTENT -->
+    <div class="fixed-bottom-area">
+        <main class="layout">
+            <article>
+                <section id="tank-section">
+                    <h2 style="margin-bottom:8px;">My Fish Tank</h2>
+                    <p style="font-size:0.95rem; opacity:0.95; margin-bottom:8px;">Hover the tank to pause the fish. <br> Click inside the tank to add a new fish.</p>
+
+                    <div id="tank" class="tank" title="Click to add a fish">
+                        <!-- bubbles -->
+                        <div class="bubble" style="left:8%; animation-delay:0s"></div>
+                        <div class="bubble" style="left:28%; animation-delay:1.1s"></div>
+                        <div class="bubble" style="left:50%; animation-delay:0.5s"></div>
+                        <div class="bubble" style="left:72%; animation-delay:1.6s"></div>
+
+                        <!-- sample fish (uses PIC1.PNG as artwork) -->
+                        <div class="fish" style="top:18%; animation-duration:11s;">
+                            <img src="images/PIC1.jpg" alt="fish" loading="lazy">
+                        </div>
+                        <div class="fish fish--small" style="top:42%; animation-duration:8s; transform: scaleX(-1);">
+                            <img src="images/PIC1.jpg" alt="fish small" loading="lazy">
+                        </div>
+                        <div class="fish" style="top:66%; animation-duration:13s; animation-delay:1s;">
+                            <img src="images/PIC1.jpg" alt="fish" loading="lazy">
+                        </div>
+                    </div>
+                </section>
+            </article>
+
+            <!-- ⭐ SIDEBAR -->
+            <aside>
+                <div class="card-sidebar">
+                    <h3>Donate me:D</h3>
+
+                    <!-- NOTE: QR donate -->
+                    <img src="QRscan/Donate.jpg" alt="Donate QR Code" style="width:100%; height:auto;">
+                </div>
+            </aside>
+        </main>
+
+        <!-- ⭐ FOOTER -->
+        <footer>
+            <p>&copy; Cindo</p>
+        </footer>
+            </div>
+        </div>
+    </div>
+
+<!-- NOTE: JS xử lý modal ảnh và modal contact -->
+<script src="upload.js"></script>
+
+</body>
+</html>
