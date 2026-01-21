@@ -1,11 +1,3 @@
-/* =============================
-   Modal behavior (About, Contact) and image preview
-   - openModal / closeModal: generic handlers
-   - click outside modal closes it
-   - Escape key closes any open modal
-   - image preview keeps its own helper but uses same modal element
-============================= */
-
 function openModal(id) {
     const el = document.getElementById(id);
     if (!el) return;
@@ -18,7 +10,6 @@ function closeModal(id) {
     el.style.display = 'none';
 }
 
-// Attach click handlers for nav links
 const contactLink = document.getElementById('contactLink');
 if (contactLink) {
     contactLink.addEventListener('click', function(e) {
@@ -35,7 +26,6 @@ if (aboutLink) {
     });
 }
 
-// Close when clicking outside modal-content
 document.querySelectorAll('.modal').forEach(modal => {
     modal.addEventListener('click', function(e) {
         if (e.target === modal) {
@@ -44,14 +34,12 @@ document.querySelectorAll('.modal').forEach(modal => {
     });
 });
 
-// Close on Escape key
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
     }
 });
 
-// IMAGE PREVIEW modal helpers
 function openImgPreview(src) {
     const modal = document.getElementById('imgPreviewModal');
     const img = document.getElementById('previewImg');
@@ -68,41 +56,30 @@ function closeImgPreview() {
     if (img) img.src = '';
 }
 
-/* Note: the contact form uses FormSubmit.co and does not require extra JS. */
-
-// ---------------------------
-// Tank interactions
-// ---------------------------
 function makeTankInteractive() {
     const tank = document.getElementById('tank');
     if (!tank) return;
-
-    // Keep click-to-add as an optional manual control,
-    // but also start automatic random spawning.
-    tank.addEventListener('click', function(e) { addFish(); });
+    tank.addEventListener('click', function() { addFish(); });
     startAutoSpawn();
 }
 
 function addFish() {
     const tankEl = document.getElementById('tank');
     if (!tankEl) return;
-    // pick a random image from the collected fish image list
+
     const imgSrc = (typeof FISH_IMAGES !== 'undefined' && FISH_IMAGES.length > 0)
         ? FISH_IMAGES[Math.floor(Math.random() * FISH_IMAGES.length)]
         : 'images/PIC1.PNG';
 
     const f = document.createElement('div');
-    // random size class
     const sizeRoll = Math.random();
     if (sizeRoll < 0.12) f.className = 'fish fish--tiny';
     else if (sizeRoll < 0.42) f.className = 'fish fish--small';
     else f.className = 'fish';
 
-    // vertical position within tank
     const top = Math.floor(6 + Math.random() * 78);
     f.style.top = top + '%';
 
-    // random direction: 'right' or 'left'
     const dir = Math.random() > 0.5 ? 'right' : 'left';
 
     const dur = (5 + Math.random() * 12).toFixed(2) + 's';
@@ -111,15 +88,12 @@ function addFish() {
     f.style.animationDelay = delay;
 
     if (dir === 'right') {
-        // start just left outside the tank
         f.style.left = '-20%';
         f.style.animationName = 'swim-right';
         f.style.transform = 'scaleX(1)';
     } else {
-        // start just right outside the tank
         f.style.left = '120%';
         f.style.animationName = 'swim-left';
-        // make image face left
         f.style.transform = 'scaleX(-1)';
     }
 
@@ -131,18 +105,15 @@ function addFish() {
 
     tankEl.appendChild(f);
 
-    // remove after it finishes swimming (duration + small buffer)
     const total = (parseFloat(dur) + 2) * 1000;
     setTimeout(() => { if (f.parentNode) f.parentNode.removeChild(f); }, total);
 }
 
-// init tank when DOM is ready
 function initExistingFish() {
     const tankEl = document.getElementById('tank');
     if (!tankEl) return;
     const nodes = tankEl.querySelectorAll('.fish');
     nodes.forEach(f => {
-        // if already configured, skip
         if (f.style.animationName) return;
 
         const dir = Math.random() > 0.5 ? 'right' : 'left';
@@ -163,7 +134,6 @@ function initExistingFish() {
     });
 }
 
-// auto-spawn helpers
 let _autoSpawnTimer = null;
 function startAutoSpawn(minMs = 900, maxMs = 3000) {
     stopAutoSpawn();
@@ -184,26 +154,71 @@ function stopAutoSpawn() {
     }
 }
 
-// init tank when DOM is ready
-document.addEventListener('DOMContentLoaded', function() { initExistingFish(); collectFishImages(); makeTankInteractive(); });
+document.addEventListener('DOMContentLoaded', function() {
+    initExistingFish();
+    collectFishImages();
+    makeTankInteractive();
+    initGalleryPagination();
+});
 
-// Build fish image list from existing artwork images on the page so
-// adding a new image to the `.cards` area will automatically include it.
 const FISH_IMAGES = [];
 function collectFishImages() {
-    // look for images inside .cards (your artwork thumbnails)
     const imgs = document.querySelectorAll('.cards img');
     imgs.forEach(img => {
         const src = img.getAttribute('src');
         if (!src) return;
-        // only include images from the images/ folder to avoid UI icons
         if (src.indexOf('images/') !== -1 && !FISH_IMAGES.includes(src)) {
             FISH_IMAGES.push(src);
         }
     });
-    // fallback to a default if nothing found
     if (FISH_IMAGES.length === 0) FISH_IMAGES.push('images/PIC1.PNG');
 }
-// collect at load
-document.addEventListener('DOMContentLoaded', collectFishImages);
 
+function initGalleryPagination() {
+    const cardsContainer = document.getElementById('cardsContainer');
+    if (!cardsContainer) return;
+
+    const allCards = Array.from(cardsContainer.querySelectorAll('.card'));
+    const perPage = 6;
+    let currentPage = 1;
+    const totalPages = Math.ceil(allCards.length / perPage);
+
+    const prevBtn = document.getElementById('prevPage');
+    const nextBtn = document.getElementById('nextPage');
+    const pageInfo = document.getElementById('pageInfo');
+
+    function renderPage(page) {
+        const start = (page - 1) * perPage;
+        const end = start + perPage;
+
+        allCards.forEach((card, index) => {
+            if (index >= start && index < end) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        if (pageInfo) pageInfo.textContent = 'Page ' + page + ' / ' + totalPages;
+        if (prevBtn) prevBtn.disabled = page === 1;
+        if (nextBtn) nextBtn.disabled = page === totalPages;
+    }
+
+    if (prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', function () {
+            if (currentPage > 1) {
+                currentPage--;
+                renderPage(currentPage);
+            }
+        });
+
+        nextBtn.addEventListener('click', function () {
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderPage(currentPage);
+            }
+        });
+    }
+
+    renderPage(currentPage);
+}
