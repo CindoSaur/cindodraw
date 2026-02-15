@@ -1,237 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cindudraw.com</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="page-wrapper">
-      <div class="container">
-        <header>
-          <h1>Welcome Drawing With Cindo</h1>
-          <p>I will upload my pictures in this web</p>
-        </header>
 
-        <nav>
-          <ul>
-            <li><a class="btn-nav" href="#about" id="aboutLink">About</a></li>
-            <li>
-              <a class="btn-nav" href="#contact" id="contactLink">Contact</a>
-            </li>
-          </ul>
-        </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cindudraw.com</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-        <div class="cards-wrapper">
-          <div class="cards" id="cardsContainer">
-            <div class="card">
-              <img
-                src="images/PIC9.png"
-                alt="#9"
-                onclick="openImgPreview(this.src)"
-              />
-              <h4>#9</h4>
-            </div>
+<body>
+  <div class="page-wrapper">
+    <div class="container">
+      <header>
+        <h1>Welcome Drawing With Cindo</h1>
+        <p>I will upload my pictures in this web</p>
+      </header>
 
-            <div class="card">
-              <img
-                src="images/PIC8.png"
-                alt="#8"
-                onclick="openImgPreview(this.src)"
-              />
-              <h4>#8</h4>
-            </div>
+      <nav>
+        <ul>
+          <li><a class="btn-nav" href="#about" id="aboutLink">About</a></li>
+          <li>
+            <a class="btn-nav" href="#contact" id="contactLink">Contact</a>
+          </li>
+        </ul>
+      </nav>
 
-            <div class="card">
-              <img
-                src="images/PIC7.png"
-                alt="#7"
-                onclick="openImgPreview(this.src)"
-              />
-              <h4>#7</h4>
-            </div>
+      <div class="cards-wrapper">
+        <div class="cards" id="cardsContainer">
 
-            <div class="card">
-              <img
-                src="images/PIC6.png"
-                alt="#6"
-                onclick="openImgPreview(this.src)"
-              />
-              <h4>#6</h4>
-            </div>
-
-            <div class="card">
-              <img
-                src="images/PIC5.png"
-                alt="#5"
-                onclick="openImgPreview(this.src)"
-              />
-              <h4>#5</h4>
-            </div>
-
-            <div class="card">
-              <img
-                src="images/PIC4.png"
-                alt="#4"
-                onclick="openImgPreview(this.src)"
-              />
-              <h4>#4</h4>
-            </div>
-
-            <div class="card">
-              <img
-                src="images/PIC3.jpg"
-                alt="#3"
-                onclick="openImgPreview(this.src)"
-              />
-              <h4>#3</h4>
-            </div>
-
-            <div class="card">
-              <img
-                src="images/PIC2.jpg"
-                alt="#2"
-                onclick="openImgPreview(this.src)"
-              />
-              <h4>#2</h4>
-            </div>
-
-            <div class="card">
-              <img
-                src="images/PIC1.jpg"
-                alt="#1"
-                onclick="openImgPreview(this.src)"
-              />
-              <h4>#1</h4>
-            </div>
+          <div class="card">
+            <img src="images/PIC12.png" alt="#12" onclick="openImgPreview(this.src)" />
+            <h4>#12</h4>
+          </div>
+          <div class="card">
+            <img src="images/PIC11.png" alt="#11" onclick="openImgPreview(this.src)" />
+            <h4>#11</h4>
+          </div>
+          <div class="card">
+            <img src="images/PIC10.png" alt="#10" onclick="openImgPreview(this.src)" />
+            <h4>#10</h4>
           </div>
 
-          <div class="pagination">
-            <button id="prevPage" disabled>Previous</button>
-            <span id="pageInfo">Page 1</span>
-            <button id="nextPage">Next</button>
+          <div class="card">
+            <img src="images/PIC8.png" alt="#8" onclick="openImgPreview(this.src)" />
+            <h4>#8</h4>
+          </div>
+
+          <div class="card">
+            <img src="images/PIC7.png" alt="#7" onclick="openImgPreview(this.src)" />
+            <h4>#7</h4>
+          </div>
+
+          <div class="card">
+            <img src="images/PIC6.png" alt="#6" onclick="openImgPreview(this.src)" />
+            <h4>#6</h4>
+          </div>
+
+          <div class="card">
+            <img src="images/PIC5.png" alt="#5" onclick="openImgPreview(this.src)" />
+            <h4>#5</h4>
+          </div>
+
+          <div class="card">
+            <img src="images/PIC4.png" alt="#4" onclick="openImgPreview(this.src)" />
+            <h4>#4</h4>
+          </div>
+
+          <div class="card">
+            <img src="images/PIC3.jpg" alt="#3" onclick="openImgPreview(this.src)" />
+            <h4>#3</h4>
+          </div>
+
+          <div class="card">
+            <img src="images/PIC2.jpg" alt="#2" onclick="openImgPreview(this.src)" />
+            <h4>#2</h4>
+          </div>
+
+          <div class="card">
+            <img src="images/PIC1.jpg" alt="#1" onclick="openImgPreview(this.src)" />
+            <h4>#1</h4>
           </div>
         </div>
 
-        <div id="imgPreviewModal" class="modal">
-          <span class="close" onclick="closeImgPreview()">&times;</span>
-          <img id="previewImg" class="preview-img" />
+        <div class="pagination">
+          <button id="prevPage" disabled>Previous</button>
+          <span id="pageInfo">Page 1</span>
+          <button id="nextPage">Next</button>
         </div>
+      </div>
 
-        <div id="contactModal" class="modal">
-          <div class="modal-content contact-center">
-            <span class="close" onclick="closeModal('contactModal')"
-              >&times;</span
-            >
+      <div id="imgPreviewModal" class="modal">
+        <span class="close" onclick="closeImgPreview()">&times;</span>
+        <img id="previewImg" class="preview-img" />
+      </div>
 
-            <div class="contact-icon">
-              <img src="images/contact-icon.png" alt="Contact icon" />
-            </div>
+      <div id="contactModal" class="modal">
+        <div class="modal-content contact-center">
+          <span class="close" onclick="closeModal('contactModal')">&times;</span>
 
-            <h2 class="contact-title">Send me a mail</h2>
-
-            <a href="mailto:gglau223@gmail.com" class="contact-mail-btn">
-              Send mail
-            </a>
+          <div class="contact-icon">
+            <img src="images/contact-icon.png" alt="Contact icon" />
           </div>
+
+          <h2 class="contact-title">Send me a mail</h2>
+
+          <a href="mailto:gglau223@gmail.com" class="contact-mail-btn">
+            Send mail
+          </a>
         </div>
+      </div>
 
-        <div id="aboutModal" class="modal">
-          <div class="modal-content">
-            <span class="close" onclick="closeModal('aboutModal')"
-              >&times;</span
-            >
-            <h2>About This Site</h2>
-            <p>
-              Welcome to "Drawing With Cindo" — a small showcase of my drawings
-              and a simple place to share and receive feedback.
-            </p>
-            <br />
-            <p>Author: Cindo</p>
-          </div>
+      <div id="aboutModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal('aboutModal')">&times;</span>
+          <h2>About This Site</h2>
+          <p>
+            Welcome to "Drawing With Cindo" — a small showcase of my drawings
+            and a simple place to share and receive feedback.
+          </p>
+          <br />
+          <p>Author: Cindo</p>
         </div>
+      </div>
 
-        <div class="fixed-bottom-area">
-          <main class="layout">
-            <article>
-              <section id="tank-section">
-                <h2 style="margin-bottom: 8px">My Fish Tank</h2>
-                <p
-                  style="font-size: 0.95rem; opacity: 0.95; margin-bottom: 8px"
-                >
-                  Hover the tank to pause the fish. <br />
-                  Click inside the tank to add a new fish.
-                </p>
+      <div class="fixed-bottom-area">
+        <main class="layout">
+          <article>
+            <section id="tank-section">
+              <h2 style="margin-bottom: 8px">My Fish Tank</h2>
+              <p style="font-size: 0.95rem; opacity: 0.95; margin-bottom: 8px">
+                Hover the tank to pause the fish. <br />
+                Click inside the tank to add a new fish.
+              </p>
 
-                <div id="tank" class="tank" title="Click to add a fish">
-                  <div
-                    class="bubble"
-                    style="left: 8%; animation-delay: 0s"
-                  ></div>
-                  <div
-                    class="bubble"
-                    style="left: 28%; animation-delay: 1.1s"
-                  ></div>
-                  <div
-                    class="bubble"
-                    style="left: 50%; animation-delay: 0.5s"
-                  ></div>
-                  <div
-                    class="bubble"
-                    style="left: 72%; animation-delay: 1.6s"
-                  ></div>
+              <div id="tank" class="tank" title="Click to add a fish">
+                <div class="bubble" style="left: 8%; animation-delay: 0s"></div>
+                <div class="bubble" style="left: 28%; animation-delay: 1.1s"></div>
+                <div class="bubble" style="left: 50%; animation-delay: 0.5s"></div>
+                <div class="bubble" style="left: 72%; animation-delay: 1.6s"></div>
 
-                  <div class="fish" style="top: 18%; animation-duration: 11s">
-                    <img src="images/PIC1.jpg" alt="fish" loading="lazy" />
-                  </div>
-                  <div
-                    class="fish fish--small"
-                    style="
+                <div class="fish" style="top: 18%; animation-duration: 11s">
+                  <img src="images/PIC1.jpg" alt="fish" loading="lazy" />
+                </div>
+                <div class="fish fish--small" style="
                       top: 42%;
                       animation-duration: 8s;
                       transform: scaleX(-1);
-                    "
-                  >
-                    <img
-                      src="images/PIC1.jpg"
-                      alt="fish small"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div
-                    class="fish"
-                    style="
+                    ">
+                  <img src="images/PIC1.jpg" alt="fish small" loading="lazy" />
+                </div>
+                <div class="fish" style="
                       top: 66%;
                       animation-duration: 13s;
                       animation-delay: 1s;
-                    "
-                  >
-                    <img src="images/PIC1.jpg" alt="fish" loading="lazy" />
-                  </div>
+                    ">
+                  <img src="images/PIC1.jpg" alt="fish" loading="lazy" />
                 </div>
-              </section>
-            </article>
-
-            <aside>
-              <div class="card-sidebar">
-                <h3>Donate me:D</h3>
-                <img
-                  src="QRscan/Donate.jpg"
-                  alt="Donate QR Code"
-                  style="width: 100%; height: auto"
-                />
               </div>
-            </aside>
-          </main>
+            </section>
+          </article>
 
-          <footer>
-            <p>Thanks for all to visit my website</p>
-          </footer>
-        </div>
+          <aside>
+            <div class="card-sidebar">
+              <h3>Donate me:D</h3>
+              <img src="QRscan/Donate.jpg" alt="Donate QR Code" style="width: 100%; height: auto" />
+            </div>
+          </aside>
+        </main>
+
+        <footer>
+          <p>Thanks for all to visit my website</p>
+        </footer>
       </div>
     </div>
+  </div>
 
-    <script src="upload.js"></script>
-  </body>
+  <script src="upload.js"></script>
+</body>
+
 </html>
