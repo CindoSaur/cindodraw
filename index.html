@@ -1,14 +1,243 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cindudraw.com</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Theme Variables ── */
+    :root {
+      --bg-grad-1: #0a0f1f; --bg-grad-2: #03080f; --bg-grad-3: #001122;
+      --surface: rgba(10,15,30,0.55); --border: rgba(0,200,255,0.15);
+      --text: #e6e6e6; --text-muted: #d6ecff; --heading: #add8ff; --accent: #9cd6ff;
+      --card-bg: rgba(0,15,30,0.7); --card-border: rgba(0,200,255,0.2);
+      --sidebar-bg: rgba(0,20,40,0.6); --modal-bg: rgba(0,25,50,0.85);
+      --input-bg: rgba(0,30,60,0.7); --nav-btn-bg: rgba(0,20,40,0.7);
+      --nav-btn-border: rgba(0,180,255,0.3); --nav-btn-text: #cceeff;
+      --footer-bg: rgba(0,10,20,0.7); --shadow: 0 0 10px rgba(0,150,255,0.2);
+      --toggle-bg: rgba(0,20,40,0.8); --toggle-border: rgba(0,200,255,0.4); --toggle-text: #9cd6ff;
+    }
+    [data-theme="light"] {
+      --bg-grad-1: #e8f4ff; --bg-grad-2: #f0f8ff; --bg-grad-3: #ddeeff;
+      --surface: rgba(255,255,255,0.75); --border: rgba(0,120,200,0.2);
+      --text: #1a2a3a; --text-muted: #2a4a6a; --heading: #0055aa; --accent: #0077cc;
+      --card-bg: rgba(255,255,255,0.85); --card-border: rgba(0,120,200,0.25);
+      --sidebar-bg: rgba(220,240,255,0.7); --modal-bg: rgba(240,250,255,0.95);
+      --input-bg: rgba(220,240,255,0.7); --nav-btn-bg: rgba(200,230,255,0.7);
+      --nav-btn-border: rgba(0,120,200,0.35); --nav-btn-text: #003a6e;
+      --footer-bg: rgba(200,230,255,0.6); --shadow: 0 0 10px rgba(0,100,200,0.12);
+      --toggle-bg: rgba(200,230,255,0.9); --toggle-border: rgba(0,120,200,0.4); --toggle-text: #0055aa;
+    }
+
+    body { background: linear-gradient(135deg,var(--bg-grad-1),var(--bg-grad-2),var(--bg-grad-3)) !important; color:var(--text); }
+    header,nav,article,section,aside,footer { background:var(--surface) !important; border-color:var(--border) !important; color:var(--text) !important; box-shadow:var(--shadow) !important; }
+    h1,h2,h3,h4 { font-family:'Orbitron',monospace !important; color:var(--heading) !important; }
+    p,body { font-family:'Exo 2',sans-serif !important; color:var(--text-muted); }
+    nav a,.btn-nav,#pageInfo,.modal input,.modal textarea { font-family:'Share Tech Mono',monospace !important; }
+    nav a { color:var(--accent) !important; }
+    .btn-nav { background:var(--nav-btn-bg) !important; border-color:var(--nav-btn-border) !important; color:var(--nav-btn-text) !important; display:flex; align-items:center; gap:6px; }
+    [data-theme="light"] .btn-nav:hover { background:rgba(0,100,180,0.85) !important; color:#fff !important; }
+    .card { background:var(--card-bg) !important; border-color:var(--card-border) !important; }
+    .card-sidebar { background:var(--sidebar-bg) !important; border-color:var(--card-border) !important; }
+    footer { background:var(--footer-bg) !important; }
+    .modal-content { background:var(--modal-bg) !important; border-color:var(--border) !important; color:var(--text) !important; }
+    [data-theme="light"] .modal-content h2, [data-theme="light"] .modal-content p, [data-theme="light"] .modal-content { color:#1a2a3a !important; }
+    .modal input,.modal textarea { background:var(--input-bg) !important; border-color:var(--border) !important; color:var(--text) !important; }
+    [data-theme="light"] body::before { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cdefs%3E%3ClinearGradient id='waveGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:rgba(100,180,255,0.15);stop-opacity:1'/%3E%3Cstop offset='100%25' style='stop-color:rgba(60,140,220,0.2);stop-opacity:1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0,40 Q300,20 600,40 T1200,40 L1200,120 L0,120 Z' fill='url(%23waveGrad)'/%3E%3Cpath d='M0,60 Q300,40 600,60 T1200,60 L1200,120 L0,120 Z' fill='rgba(80,160,240,0.08)'/%3E%3C/svg%3E") !important; }
+
+    .material-icons-round { vertical-align:middle; font-size:1.1em; margin-right:5px; }
+
+    /* ── Theme Toggle ── */
+    .theme-toggle {
+      position:fixed; top:18px; right:18px; z-index:9999;
+      background:var(--toggle-bg); border:1px solid var(--toggle-border);
+      border-radius:999px; padding:8px 16px; cursor:pointer;
+      display:flex; align-items:center; gap:7px;
+      font-family:'Share Tech Mono',monospace; font-size:0.85rem; color:var(--toggle-text);
+      backdrop-filter:blur(8px); box-shadow:0 0 14px rgba(0,180,255,0.25);
+      transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .theme-toggle:hover { transform:translateY(-3px) scale(1.06); box-shadow:0 0 24px rgba(0,200,255,0.5); }
+    .theme-toggle .material-icons-round { font-size:1.2em; margin-right:0; transition:transform 0.5s ease; }
+    .theme-toggle:hover .material-icons-round { transform:rotate(30deg); }
+
+    /* ── Layout helpers ── */
+    .pagination button { display:flex; align-items:center; gap:5px; font-family:'Share Tech Mono',monospace; }
+    footer p,header p { display:flex; align-items:center; justify-content:center; gap:8px; }
+    #tank-section p { display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
+    .card-sidebar h3 { display:flex; align-items:center; justify-content:center; gap:8px; }
+    .modal-content p { display:flex; align-items:center; gap:6px; }
+    .contact-title { display:flex; align-items:center; gap:8px; }
+    #aboutModal h2 { display:flex; align-items:center; justify-content:center; gap:8px; }
+
+    /* ── Light mode overrides ── */
+    [data-theme="light"] .tank { background:linear-gradient(180deg,rgba(150,210,255,0.18),rgba(80,160,230,0.28)) !important; border-color:rgba(0,120,200,0.15) !important; }
+    [data-theme="light"] .tank .bubble { background:rgba(180,230,255,0.9); }
+    [data-theme="light"] .pagination button { background:rgba(200,230,255,0.85); border-color:rgba(0,120,200,0.4); color:#003a6e; }
+    [data-theme="light"] .pagination button:hover:not(:disabled) { background:#0077cc; color:white; }
+    [data-theme="light"] #pageInfo { color:#0055aa; }
+    [data-theme="light"] .close { color:#1a2a3a; }
+    [data-theme="light"] .contact-mail-btn { color:#fff; }
+
+    body,header,nav,article,section,aside,footer,.card,.card-sidebar,.modal-content,.btn-nav,.pagination button,.theme-toggle {
+      transition:background-color 0.35s ease,border-color 0.35s ease,color 0.35s ease,box-shadow 0.35s ease !important;
+    }
+
+    /* ── Donate widget ── */
+    @keyframes fadeInUp { from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);} }
+
+    /* ══════════════════════════════
+       WINDOW-STYLE LIGHTBOX
+       ══════════════════════════════ */
+    @keyframes lbIn {
+      from { opacity:0; transform:scale(0.82) translateY(30px); }
+      to   { opacity:1; transform:scale(1) translateY(0); }
+    }
+    @keyframes lbFadeIn { from{opacity:0;}to{opacity:1;} }
+    @keyframes imgSwap {
+      from { opacity:0; transform:scale(0.93); }
+      to   { opacity:1; transform:scale(1); }
+    }
+
+    #imgPreviewModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      animation: lbFadeIn 0.2s ease both;
+    }
+    #imgPreviewModal.open { display: flex; }
+
+    .lightbox-window {
+      background: rgba(8,14,28,0.96);
+      border: 1px solid rgba(0,200,255,0.3);
+      border-radius: 14px;
+      width: min(92vw, 860px);
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 0 1px rgba(0,200,255,0.1), 0 30px 80px rgba(0,0,0,0.7), 0 0 60px rgba(0,150,255,0.15);
+      animation: lbIn 0.35s cubic-bezier(0.34,1.4,0.64,1) both;
+      overflow: hidden;
+    }
+
+    /* Title bar */
+    .lightbox-titlebar {
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      background: rgba(0,20,45,0.9);
+      border-bottom: 1px solid rgba(0,200,255,0.12);
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .lightbox-dots { display:flex; gap:7px; align-items:center; }
+    .dot { width:13px; height:13px; border-radius:50%; cursor:pointer; transition:filter 0.2s ease,transform 0.2s ease; }
+    .dot:hover { filter:brightness(1.4); transform:scale(1.15); }
+    .dot-red    { background:#ff5f57; box-shadow:0 0 6px rgba(255,80,80,0.5); }
+    .dot-yellow { background:#febc2e; box-shadow:0 0 6px rgba(255,190,50,0.4); cursor:default; }
+    .dot-green  { background:#28c840; box-shadow:0 0 6px rgba(40,200,80,0.4); cursor:default; }
+    .lightbox-title {
+      flex:1; text-align:center;
+      font-family:'Share Tech Mono',monospace; font-size:0.88rem;
+      color:#9cd6ff; letter-spacing:1px;
+    }
+    .lightbox-close-btn {
+      background:none; border:none; cursor:pointer;
+      color:rgba(150,200,255,0.6); padding:2px;
+      display:flex; align-items:center;
+      transition:color 0.2s ease,transform 0.25s ease;
+    }
+    .lightbox-close-btn:hover { color:#ff5f57; transform:rotate(90deg); }
+    .lightbox-close-btn .material-icons-round { font-size:1.2em; margin:0; }
+
+    /* Image area */
+    .lightbox-body {
+      display:flex; align-items:center; flex:1;
+      overflow:hidden; min-height:0; padding:16px 8px; gap:8px;
+    }
+    .lightbox-img-wrap {
+      flex:1; display:flex; align-items:center; justify-content:center;
+      min-height:0; overflow:hidden;
+    }
+    #previewImg {
+      max-width:100%; max-height:68vh;
+      border-radius:8px; object-fit:contain;
+      box-shadow:0 0 30px rgba(0,150,255,0.25);
+      animation:imgSwap 0.25s ease both;
+    }
+
+    /* Nav arrows */
+    .lb-arrow {
+      flex-shrink:0; width:46px; height:46px;
+      border-radius:50%; border:1px solid rgba(0,200,255,0.3);
+      background:rgba(0,20,45,0.8); color:#9cd6ff;
+      cursor:pointer; display:flex; align-items:center; justify-content:center;
+      transition:all 0.22s cubic-bezier(0.34,1.56,0.64,1);
+      backdrop-filter:blur(4px);
+    }
+    .lb-arrow:hover { background:rgba(0,100,200,0.6); border-color:rgba(0,220,255,0.7); transform:scale(1.15); box-shadow:0 0 18px rgba(0,200,255,0.45); }
+    .lb-arrow:active { transform:scale(1.05); }
+    .lb-arrow:disabled { opacity:0.25; cursor:default; transform:none; box-shadow:none; }
+    .lb-arrow .material-icons-round { font-size:1.6em; margin:0; }
+
+    /* Footer counter */
+    .lightbox-footer {
+      text-align:center; padding:8px 14px 12px;
+      font-family:'Share Tech Mono',monospace; font-size:0.82rem;
+      color:rgba(150,200,255,0.55);
+      border-top:1px solid rgba(0,200,255,0.08); flex-shrink:0;
+    }
+
+    /* Light mode lightbox */
+    [data-theme="light"] .lightbox-window { background:rgba(240,250,255,0.97); border-color:rgba(0,120,200,0.3); box-shadow:0 30px 80px rgba(0,80,180,0.2),0 0 40px rgba(0,120,200,0.1); }
+    [data-theme="light"] .lightbox-titlebar { background:rgba(210,235,255,0.95); border-bottom-color:rgba(0,120,200,0.15); }
+    [data-theme="light"] .lightbox-title { color:#0055aa; }
+    [data-theme="light"] .lightbox-footer { color:rgba(0,80,160,0.5); border-top-color:rgba(0,120,200,0.1); }
+    [data-theme="light"] .lb-arrow { background:rgba(220,240,255,0.9); border-color:rgba(0,120,200,0.3); color:#0055aa; }
+    [data-theme="light"] .lb-arrow:hover { background:rgba(0,120,200,0.15); border-color:rgba(0,150,220,0.6); }
+
+    @media (max-width:600px) {
+      .lightbox-window { width:98vw; }
+      .lb-arrow { width:36px; height:36px; }
+      #previewImg { max-height:55vh; }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode">
+    <span class="material-icons-round" id="themeIcon">dark_mode</span>
+    <span id="themeLabel">Light</span>
+  </button>
+
+  <!-- Fixed Donate Widget (bottom-right) -->
+  <div id="donateWidget" style="position:fixed;bottom:24px;right:24px;z-index:9998;display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
+    <div id="donatePanel" style="display:none;background:var(--modal-bg,rgba(0,25,50,0.92));border:1px solid var(--border,rgba(0,200,255,0.2));border-radius:16px;padding:16px;backdrop-filter:blur(12px);box-shadow:0 0 30px rgba(0,180,255,0.3);text-align:center;width:170px;animation:fadeInUp 0.2s ease;">
+      <h3 style="font-size:0.85rem;margin-bottom:10px;padding-bottom:8px;">
+        <span class="material-icons-round" style="font-size:1em">favorite</span> Donate me :)
+      </h3>
+      <img src="QRscan/Donate.jpg" alt="Donate QR Code" style="width:100%;border-radius:10px;" />
+    </div>
+    <button onclick="toggleDonate()" id="donateBtn" style="background:var(--toggle-bg,rgba(0,20,40,0.85));border:1px solid var(--toggle-border,rgba(0,200,255,0.4));border-radius:999px;padding:10px 18px;color:var(--toggle-text,#9cd6ff);font-family:'Share Tech Mono',monospace;font-size:0.85rem;cursor:pointer;display:flex;align-items:center;gap:7px;backdrop-filter:blur(8px);box-shadow:0 0 16px rgba(0,180,255,0.3);transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);"
+      onmouseover="this.style.transform='translateY(-3px) scale(1.07)';this.style.boxShadow='0 0 26px rgba(0,220,255,0.55)'"
+      onmouseout="this.style.transform='';this.style.boxShadow='0 0 16px rgba(0,180,255,0.3)'">
+      <span class="material-icons-round" id="donateIcon">favorite</span>Donate
+    </button>
+  </div>
+
   <div class="page-wrapper">
     <div class="container">
       <header>
@@ -18,171 +247,217 @@
 
       <nav>
         <ul>
-          <li><a class="btn-nav" href="#about" id="aboutLink">About</a></li>
-          <li>
-            <a class="btn-nav" href="#contact" id="contactLink">Contact</a>
-          </li>
+          <li><a class="btn-nav" href="#about" id="aboutLink"><span class="material-icons-round">info</span>About</a></li>
+          <li><a class="btn-nav" href="#contact" id="contactLink"><span class="material-icons-round">mail</span>Contact</a></li>
         </ul>
       </nav>
 
       <div class="cards-wrapper">
         <div class="cards" id="cardsContainer">
-           <div class="card">
-            <img src="images/PIC14.png" alt="#14" onclick="openImgPreview(this.src)" />
-            <h4>#14</h4>
-          </div>
-           <div class="card">
-            <img src="images/PIC13.png" alt="#13" onclick="openImgPreview(this.src)" />
-            <h4>#13</h4>
-          </div>
-          <div class="card">
-            <img src="images/PIC12.png" alt="#12" onclick="openImgPreview(this.src)" />
-            <h4>#12</h4>
-          </div>
-          <div class="card">
-            <img src="images/PIC11.png" alt="#11" onclick="openImgPreview(this.src)" />
-            <h4>#11</h4>
-          </div>
-          <div class="card">
-            <img src="images/PIC10.png" alt="#10" onclick="openImgPreview(this.src)" />
-            <h4>#10</h4>
-          </div>
-
-          <div class="card">
-            <img src="images/PIC8.png" alt="#8" onclick="openImgPreview(this.src)" />
-            <h4>#8</h4>
-          </div>
-
-          <div class="card">
-            <img src="images/PIC7.png" alt="#7" onclick="openImgPreview(this.src)" />
-            <h4>#7</h4>
-          </div>
-
-          <div class="card">
-            <img src="images/PIC6.png" alt="#6" onclick="openImgPreview(this.src)" />
-            <h4>#6</h4>
-          </div>
-
-          <div class="card">
-            <img src="images/PIC5.png" alt="#5" onclick="openImgPreview(this.src)" />
-            <h4>#5</h4>
-          </div>
-
-          <div class="card">
-            <img src="images/PIC4.png" alt="#4" onclick="openImgPreview(this.src)" />
-            <h4>#4</h4>
-          </div>
-
-          <div class="card">
-            <img src="images/PIC3.jpg" alt="#3" onclick="openImgPreview(this.src)" />
-            <h4>#3</h4>
-          </div>
-
-          <div class="card">
-            <img src="images/PIC2.jpg" alt="#2" onclick="openImgPreview(this.src)" />
-            <h4>#2</h4>
-          </div>
-
-          <div class="card">
-            <img src="images/PIC1.jpg" alt="#1" onclick="openImgPreview(this.src)" />
-            <h4>#1</h4>
-          </div>
+          <div class="card"><img src="images/PIC14.png" alt="#14" onclick="openImgPreview(0)" /><h4>#14</h4></div>
+          <div class="card"><img src="images/PIC13.png" alt="#13" onclick="openImgPreview(1)" /><h4>#13</h4></div>
+          <div class="card"><img src="images/PIC12.png" alt="#12" onclick="openImgPreview(2)" /><h4>#12</h4></div>
+          <div class="card"><img src="images/PIC11.png" alt="#11" onclick="openImgPreview(3)" /><h4>#11</h4></div>
+          <div class="card"><img src="images/PIC10.png" alt="#10" onclick="openImgPreview(4)" /><h4>#10</h4></div>
+          <div class="card"><img src="images/PIC8.png"  alt="#8"  onclick="openImgPreview(5)" /><h4>#8</h4></div>
+          <div class="card"><img src="images/PIC7.png"  alt="#7"  onclick="openImgPreview(6)" /><h4>#7</h4></div>
+          <div class="card"><img src="images/PIC6.png"  alt="#6"  onclick="openImgPreview(7)" /><h4>#6</h4></div>
+          <div class="card"><img src="images/PIC5.png"  alt="#5"  onclick="openImgPreview(8)" /><h4>#5</h4></div>
+          <div class="card"><img src="images/PIC4.png"  alt="#4"  onclick="openImgPreview(9)" /><h4>#4</h4></div>
+          <div class="card"><img src="images/PIC3.jpg"  alt="#3"  onclick="openImgPreview(10)" /><h4>#3</h4></div>
+          <div class="card"><img src="images/PIC2.jpg"  alt="#2"  onclick="openImgPreview(11)" /><h4>#2</h4></div>
+          <div class="card"><img src="images/PIC1.jpg"  alt="#1"  onclick="openImgPreview(12)" /><h4>#1</h4></div>
         </div>
 
         <div class="pagination">
-          <button id="prevPage" disabled>Previous</button>
+          <button id="prevPage" disabled>
+            <span class="material-icons-round">arrow_back_ios</span>Previous
+          </button>
           <span id="pageInfo">Page 1</span>
-          <button id="nextPage">Next</button>
+          <button id="nextPage">
+            Next<span class="material-icons-round" style="margin-right:0;margin-left:5px">arrow_forward_ios</span>
+          </button>
         </div>
       </div>
 
-      <div id="imgPreviewModal" class="modal">
-        <span class="close" onclick="closeImgPreview()">&times;</span>
-        <img id="previewImg" class="preview-img" />
+      <!-- Window-Style Image Lightbox -->
+      <div id="imgPreviewModal" onclick="handleLightboxBackdrop(event)">
+        <div class="lightbox-window" id="lightboxWindow">
+          <div class="lightbox-titlebar">
+            <div class="lightbox-dots">
+              <span class="dot dot-red" onclick="closeImgPreview()"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span class="lightbox-title" id="lightboxTitle">Drawing #1</span>
+            <button class="lightbox-close-btn" onclick="closeImgPreview()">
+              <span class="material-icons-round">close</span>
+            </button>
+          </div>
+          <div class="lightbox-body">
+            <button class="lb-arrow lb-prev" onclick="lightboxNav(-1)" id="lbPrev">
+              <span class="material-icons-round">chevron_left</span>
+            </button>
+            <div class="lightbox-img-wrap">
+              <img id="previewImg" class="preview-img" alt="preview" />
+            </div>
+            <button class="lb-arrow lb-next" onclick="lightboxNav(1)" id="lbNext">
+              <span class="material-icons-round">chevron_right</span>
+            </button>
+          </div>
+          <div class="lightbox-footer">
+            <span id="lightboxCounter">1 / 13</span>
+          </div>
+        </div>
       </div>
 
+      <!-- Contact Modal -->
       <div id="contactModal" class="modal">
         <div class="modal-content contact-center">
           <span class="close" onclick="closeModal('contactModal')">&times;</span>
-
           <div class="contact-icon">
             <img src="images/contact-icon.png" alt="Contact icon" />
           </div>
-
-          <h2 class="contact-title">Send me a mail</h2>
-
+          <h2 class="contact-title">
+            <span class="material-icons-round" style="font-size:1.2em">email</span>Send me a mail
+          </h2>
           <a href="mailto:gglau223@gmail.com" class="contact-mail-btn">
-            Send mail
+            <span class="material-icons-round">send</span> Send mail
           </a>
         </div>
       </div>
 
+      <!-- About Modal -->
       <div id="aboutModal" class="modal">
         <div class="modal-content">
           <span class="close" onclick="closeModal('aboutModal')">&times;</span>
-          <h2>About This Site</h2>
-          <p>
-            Welcome to "Drawing With Cindo" — a small showcase of my drawings
-            and a simple place to share and receive feedback.
-          </p>
+          <h2><span class="material-icons-round">palette</span>About This Site</h2>
+          <p><span class="material-icons-round" style="flex-shrink:0">draw</span>Welcome to "Drawing With Cindo" — a small showcase of my drawings and a simple place to share and receive feedback.</p>
           <br />
-          <p>Author: Cindo</p>
+          <p><span class="material-icons-round" style="flex-shrink:0">person</span>Author: Cindo</p>
         </div>
       </div>
 
       <div class="fixed-bottom-area">
-        <main class="layout">
+        <main class="layout" style="grid-template-columns:1fr !important;">
           <article>
             <section id="tank-section">
-              <h2 style="margin-bottom: 8px">My Fish Tank</h2>
-              <p style="font-size: 0.95rem; opacity: 0.95; margin-bottom: 8px">
-                Hover the tank to pause the fish. <br />
-                Click inside the tank to add a new fish.
+              <h2 style="margin-bottom:8px">My Fish Tank</h2>
+              <p style="font-size:0.95rem;opacity:0.95;margin-bottom:8px">
+              Hover to pause · Click to add a fish
               </p>
-
               <div id="tank" class="tank" title="Click to add a fish">
-                <div class="bubble" style="left: 8%; animation-delay: 0s"></div>
-                <div class="bubble" style="left: 28%; animation-delay: 1.1s"></div>
-                <div class="bubble" style="left: 50%; animation-delay: 0.5s"></div>
-                <div class="bubble" style="left: 72%; animation-delay: 1.6s"></div>
-
-                <div class="fish" style="top: 18%; animation-duration: 11s">
-                  <img src="images/PIC1.jpg" alt="fish" loading="lazy" />
-                </div>
-                <div class="fish fish--small" style="
-                      top: 42%;
-                      animation-duration: 8s;
-                      transform: scaleX(-1);
-                    ">
-                  <img src="images/PIC1.jpg" alt="fish small" loading="lazy" />
-                </div>
-                <div class="fish" style="
-                      top: 66%;
-                      animation-duration: 13s;
-                      animation-delay: 1s;
-                    ">
-                  <img src="images/PIC1.jpg" alt="fish" loading="lazy" />
-                </div>
+                <div class="bubble" style="left:8%;animation-delay:0s"></div>
+                <div class="bubble" style="left:28%;animation-delay:1.1s"></div>
+                <div class="bubble" style="left:50%;animation-delay:0.5s"></div>
+                <div class="bubble" style="left:72%;animation-delay:1.6s"></div>
+                <div class="fish" style="top:18%;animation-duration:11s"><img src="images/PIC1.jpg" alt="fish" loading="lazy"/></div>
+                <div class="fish fish--small" style="top:42%;animation-duration:8s;transform:scaleX(-1);"><img src="images/PIC1.jpg" alt="fish" loading="lazy"/></div>
+                <div class="fish" style="top:66%;animation-duration:13s;animation-delay:1s;"><img src="images/PIC1.jpg" alt="fish" loading="lazy"/></div>
               </div>
             </section>
           </article>
-
-          <aside>
-            <div class="card-sidebar">
-              <h3>Donate me:D</h3>
-              <img src="QRscan/Donate.jpg" alt="Donate QR Code" style="width: 100%; height: auto" />
-            </div>
-          </aside>
         </main>
-
         <footer>
-          <p>Thanks for all to visit my website</p>
+          <p>
+            <span class="material-icons-round">favorite</span>
+            Thanks for all to visit my website
+            <span class="material-icons-round">star</span>
+          </p>
         </footer>
       </div>
     </div>
   </div>
 
   <script src="upload.js"></script>
+  <script>
+    // ── Theme Toggle ──
+    (function () {
+      const html  = document.documentElement;
+      const btn   = document.getElementById('themeToggle');
+      const icon  = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+      const saved = localStorage.getItem('cindo-theme') || 'dark';
+      applyTheme(saved);
+      btn.addEventListener('click', function () {
+        applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+      });
+      function applyTheme(theme) {
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('cindo-theme', theme);
+        icon.textContent  = theme === 'dark' ? 'dark_mode' : 'light_mode';
+        label.textContent = theme === 'dark' ? 'Light' : 'Dark';
+      }
+    })();
+
+    // ── Window Lightbox ──
+    const _gallery = [
+      { src: 'images/PIC14.png', title: 'Drawing #14' },
+      { src: 'images/PIC13.png', title: 'Drawing #13' },
+      { src: 'images/PIC12.png', title: 'Drawing #12' },
+      { src: 'images/PIC11.png', title: 'Drawing #11' },
+      { src: 'images/PIC10.png', title: 'Drawing #10' },
+      { src: 'images/PIC8.png',  title: 'Drawing #8'  },
+      { src: 'images/PIC7.png',  title: 'Drawing #7'  },
+      { src: 'images/PIC6.png',  title: 'Drawing #6'  },
+      { src: 'images/PIC5.png',  title: 'Drawing #5'  },
+      { src: 'images/PIC4.png',  title: 'Drawing #4'  },
+      { src: 'images/PIC3.jpg',  title: 'Drawing #3'  },
+      { src: 'images/PIC2.jpg',  title: 'Drawing #2'  },
+      { src: 'images/PIC1.jpg',  title: 'Drawing #1'  },
+    ];
+    let _lbIdx = 0;
+
+    function openImgPreview(idx) {
+      _lbIdx = idx;
+      _lbRender();
+      document.getElementById('imgPreviewModal').classList.add('open');
+      document.addEventListener('keydown', _lbKey);
+    }
+
+    function closeImgPreview() {
+      document.getElementById('imgPreviewModal').classList.remove('open');
+      document.removeEventListener('keydown', _lbKey);
+    }
+
+    function handleLightboxBackdrop(e) {
+      if (e.target === document.getElementById('imgPreviewModal')) closeImgPreview();
+    }
+
+    function lightboxNav(dir) {
+      _lbIdx = (_lbIdx + dir + _gallery.length) % _gallery.length;
+      _lbRender();
+    }
+
+    function _lbRender() {
+      const item    = _gallery[_lbIdx];
+      const img     = document.getElementById('previewImg');
+      const title   = document.getElementById('lightboxTitle');
+      const counter = document.getElementById('lightboxCounter');
+      // Re-trigger animation
+      img.style.animation = 'none';
+      img.offsetHeight;
+      img.style.animation = '';
+      img.src = item.src;
+      title.textContent   = item.title;
+      counter.textContent = (_lbIdx + 1) + ' / ' + _gallery.length;
+    }
+
+    function _lbKey(e) {
+      if (e.key === 'ArrowLeft')  lightboxNav(-1);
+      if (e.key === 'ArrowRight') lightboxNav(1);
+      if (e.key === 'Escape')     closeImgPreview();
+    }
+
+    // ── Donate Toggle ──
+    function toggleDonate() {
+      const panel = document.getElementById('donatePanel');
+      const icon  = document.getElementById('donateIcon');
+      const open  = panel.style.display === 'none' || panel.style.display === '';
+      panel.style.display = open ? 'block' : 'none';
+      icon.textContent    = open ? 'close' : 'favorite';
+    }
+  </script>
 </body>
 
 </html>
